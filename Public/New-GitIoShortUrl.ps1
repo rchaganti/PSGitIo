@@ -29,7 +29,6 @@ function New-GitIoShortURL
 
     $gitIoFormInput = @{
         url = $Url
-        code = $Code
     }
 
     if ($Code)
@@ -37,7 +36,11 @@ function New-GitIoShortURL
         if ((Get-GitIoShortUrl -ShortUrl "https://git.io/${Code}" -ErrorAction SilentlyContinue))
         {
             throw "${Code} is already taken! Try another code."
-        }        
+        }
+        else
+        {
+            $gitIoFormInput.Add('code', $Code)
+        }
     }
 
     try
